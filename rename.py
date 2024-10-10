@@ -241,6 +241,10 @@ def bulk_rename(a):
             newname = re.sub(r'(\d{1,2})_(\d{1,2})_(\d{4})', r'\3_\2_\1', newname)
         if a.fixdateandswap:
             newname = re.sub(r'Part_(\d{1,2})_(\d{1,2})_(\d{1,2})_(\d{4})', r'\4_\3_\2_Part_\1', newname)
+        if a.fixdate_physics:
+            # newname = re.sub(r'Part_(\d{1,2})_(\d{1,2})_(\d{1,2})_(\d{4})_([a-z]*[A-Z]*)*_([a-z]*[A-Z]*)*_Saurabh_Sir', r'\4_\3_\2_Physics_\5_\6_Part_\1_Saurabh_Sir', newname)
+            newname = re.sub(r'Part_(\d{1,2})_(\d{1,2})_(\d{1,2})_(\d{4})_Current_Electricity_Saurabh_Sir',
+			                 r'\4_\3_\2_Physics_Current_Electricity_Part_\1_Saurabh_Sir', newname)
         if a.camel:
             newname = camel_case(newname)
         if a.upper:
@@ -394,6 +398,7 @@ if __name__ == '__main__':
     parser.add_argument('--remove', action='store_true', help='remove file if match')
     parser.add_argument('-fd', '--fixdate', action='store_true', help='fix date format e.g DD_MM_YYYY to YYYY_MM_DD')
     parser.add_argument('-fds','--fixdateandswap', action='store_true', help='fix date and swap e.g. Part_NN_DD_MM_YYYY to YYYY_MM_DD_Part_NN')
+    parser.add_argument('-fdp','--fixdate_physics', action='store_true', help='fix date and name e.g. Part_01_07_08_2020_Current_Electricity_Saurabh_Sir.pdf to 2020_08_07_Physics_Current_Electricity_Part_01_Saurabh_Sir.pdf')
 
     # Files
     parser.add_argument('files', nargs='*')
