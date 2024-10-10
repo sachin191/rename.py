@@ -237,6 +237,10 @@ def bulk_rename(a):
             newname = replace_content(newname, a.contains, a.replace)
         if a.expression:
             newname = substitute(newname, a.expression, a.replace)
+        if a.fixdate:
+            newname = re.sub(r'(\d{1,2})_(\d{1,2})_(\d{4})', r'\3_\2_\1', newname)
+        if a.fixdateandswap:
+            newname = re.sub(r'Part_(\d{1,2})_(\d{1,2})_(\d{1,2})_(\d{4})', r'\4_\3_\2_Part_\1', newname)
         if a.camel:
             newname = camel_case(newname)
         if a.upper:
@@ -388,6 +392,9 @@ if __name__ == '__main__':
     parser.add_argument('-v', '--verbose', action='store_true', help='verbose output')
     # Other Flags
     parser.add_argument('--remove', action='store_true', help='remove file if match')
+    parser.add_argument('-fd', '--fixdate', action='store_true', help='fix date format e.g DD_MM_YYYY to YYYY_MM_DD')
+    parser.add_argument('-fds','--fixdateandswap', action='store_true', help='fix date and swap e.g. Part_NN_DD_MM_YYYY to YYYY_MM_DD_Part_NN')
+
     # Files
     parser.add_argument('files', nargs='*')
 
