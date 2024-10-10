@@ -198,12 +198,15 @@ def hash_name(filename, hash='sha256'):
 def bulk_rename(a):
     '''The loop on current dir to rename files based on requests'''
 
+    # print("HERE A", a)
     if a.files:
         filelist = a.files
     else:
         filelist = os.listdir('.')
+    # print("HERE L:", filelist)
 
     for filename in filelist:
+        # print("HERE O:", filename)
         if a.recursive and os.path.isdir(filename):
             os.chdir(filename)
             bulk_rename(a)
@@ -218,6 +221,7 @@ def bulk_rename(a):
             continue
 
         newname, extension = os.path.splitext(filename)
+        # print("HERE C:", newname)
         if a.extlower:
             extension = extension.lower()
         if a.suffix and not a.suffix in extension:
@@ -282,6 +286,7 @@ def bulk_rename(a):
             newname = timestamp_name(filename, 'ZZZZ-ToBeDefined', True)
 
         newname = newname + extension
+        # print("HERE N:", newname)
         do_rename(filename, newname, a.force, a.yes, a.verbose)
 
 
